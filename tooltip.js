@@ -3,6 +3,7 @@ class Tooltip extends HTMLElement{
         super();
         this._tooltipContainer;
         this._tooltipText = "default text";
+        this.attachShadow({mode: 'open'}); //attached shadow dom tree
     }
 
     connectedCallback(){
@@ -13,17 +14,17 @@ class Tooltip extends HTMLElement{
         tooltipIcon.textContent = ' (?)';
         tooltipIcon.addEventListener("mouseenter", this._showTooltip.bind(this));
         tooltipIcon.addEventListener("mouseleave", this._hideTooltip.bind(this));
-        this.appendChild(tooltipIcon);
+        this.shadowRoot.appendChild(tooltipIcon);
     }
 
     _showTooltip(){
         this._tooltipContainer = document.createElement("div");
         this._tooltipContainer.textContent = this._tooltipText;
-        this.appendChild(this._tooltipContainer);
+        this.shadowRoot.appendChild(this._tooltipContainer);
     }
 
     _hideTooltip(){
-        this.removeChild(this._tooltipContainer);
+        this.shadowRoot.removeChild(this._tooltipContainer);
     }
 }
 
