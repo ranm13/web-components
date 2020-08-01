@@ -1,10 +1,10 @@
 class ToggleInfoButton extends HTMLElement{
     constructor(){
         super();
-        this.attachShadow({mode: 'open'});
         this._buttonElement;
         this._infoElement;
         this.isHidden = true;
+        this.attachShadow({mode: 'open'});
         this.shadowRoot.innerHTML=`
             <style>
                 #info-box {
@@ -21,20 +21,16 @@ class ToggleInfoButton extends HTMLElement{
         this._infoElement = this.shadowRoot.querySelector('#info-box');
 
         this._buttonElement.addEventListener('click', this.toggleInfoBox.bind(this));
-        this.shadowRoot.appendChild(this._buttonElement);
-        this.shadowRoot.appendChild(this._infoElement);
+    }
+
+    disconnectedCallback(){
+        this._buttonElement.removeEventListener('click',this.toggleInfoBox);
     }
 
     toggleInfoBox(){
-        if (this.isHidden) {
-            this._infoElement.style.display = 'block';
-            this._buttonElement.textContent = 'Hide';
-            this.isHidden = false;
-          } else {
-            this._infoElement.style.display = 'none';
-            this._buttonElement.textContent = 'Show';
-            this.isHidden = true;
-          }
+        this._infoElement.style.display =  this.isHidden? 'block' : 'none';
+        this._buttonElement.textContent = this.isHidden? 'Hide': 'Show';
+        this.isHidden = !this.isHidden;
     }
 
 }
