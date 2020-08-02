@@ -24,7 +24,6 @@ class Tooltip extends HTMLElement{
 
                 :host{
                     position: relative;
-                    /* background-color: grey;*/
                 } /*style the host component*/
                 
                 :host-context(p){
