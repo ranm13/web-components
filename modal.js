@@ -2,6 +2,8 @@ class Modal extends HTMLElement{
     constructor(){
         super();
         this.attachShadow({mode: 'open'});
+        this._ConfirmButton;
+        this._CancelButton;
         this.shadowRoot.innerHTML = `
             <style>
                 #backdrop {
@@ -72,8 +74,8 @@ class Modal extends HTMLElement{
                     <slot></slot>
                 </section>
                 <section id="actions">
-                    <button>Cancel</button>
-                    <button>Confirm</button
+                    <button id="cancel-btn">Cancel</button>
+                    <button id="confirm-btn">Confirm</button
                 </section>
             </div>
         `
@@ -90,14 +92,34 @@ class Modal extends HTMLElement{
     // static get observedAttributes(){
     //     return['open'];
     // }
+    connectedCallback(){
+        this._CancelButton = this.shadowRoot.querySelector("#cancel-btn");
+        this._ConfirmButton = this.shadowRoot.querySelector("#confirm-btn");
+
+        this._CancelButton.addEventListener('click', this._cancel.bind(this));
+        this._ConfirmButton.addEventListener('click', this._confirm.bind(this));
+    }
+
+    disconnectedCallback(){
+    }
 
     open(){
         this.setAttribute('open', '');
         this.isOpen = true;
     }
 
-    close(){
-        this.removeAttribute('open');
+    _cancel(){
+        this._hide();
+    }
+
+    _confirm(){
+        this._hide();
+    }
+
+    _hide(){
+        if(this.hasAttribute('open')){
+            this.removeAttribute('open');
+        }
         this.isOpen = false;
     }
 }

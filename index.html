@@ -36,6 +36,9 @@
     <script>
         const confirmButton = document.querySelector('button');
         const modal = document.querySelector("rm-modal");
+
+        modal.addEventListener('confirm', () => console.log('Confirmed'));
+        modal.addEventListener('cancel', () => console.log('Canceled'));
         confirmButton.addEventListener('click', () => {
             if(!modal.isOpen){
                 modal.open();
