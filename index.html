@@ -29,6 +29,7 @@
 
     <button>openModal</button>
     <rm-modal>
+        <h1 slot="title">Please Confirm</h1>
         <p>modal-text</p>
     </rm-modal>
 
@@ -36,7 +37,9 @@
         const confirmButton = document.querySelector('button');
         const modal = document.querySelector("rm-modal");
         confirmButton.addEventListener('click', () => {
-            modal.open();
+            if(!modal.isOpen){
+                modal.open();
+            }
         });
     </script>
 </body>

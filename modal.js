@@ -66,7 +66,7 @@ class Modal extends HTMLElement{
             <div id="backdrop"></div>
             <div id="modal">
                 <header>
-                    <h1>Please Confirm</h1>
+                   <slot name="title"></slot>
                 </header>
                 <section id="main">
                     <slot></slot>
@@ -93,10 +93,12 @@ class Modal extends HTMLElement{
 
     open(){
         this.setAttribute('open', '');
+        this.isOpen = true;
     }
 
     close(){
         this.removeAttribute('open');
+        this.isOpen = false;
     }
 }
 
