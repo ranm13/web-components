@@ -27,10 +27,17 @@
 
     <br/>
 
+    <button>openModal</button>
     <rm-modal>
         <p>modal-text</p>
     </rm-modal>
 
-    
+    <script>
+        const confirmButton = document.querySelector('button');
+        const modal = document.querySelector("rm-modal");
+        confirmButton.addEventListener('click', () => {
+            modal.open();
+        });
+    </script>
 </body>
 </html>

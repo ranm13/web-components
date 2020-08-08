@@ -12,7 +12,10 @@ class Modal extends HTMLElement{
                     height: 100vh;
                     background:rgba(0,0,0,0.75); 
                     z-index: 10;
+                    opacity: 0;
+                    pointer-events: none;
                 }
+
 
                 #modal {
                     position: fixed;
@@ -26,6 +29,13 @@ class Modal extends HTMLElement{
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
+                    opacity: 0;
+                    pointer-events: none;
+                }
+
+                :host([open]) #backdrop, :host([open]) #modal{
+                    opacity: 1;
+                    pointer-events: all;
                 }
 
                 #actions{
@@ -67,6 +77,26 @@ class Modal extends HTMLElement{
                 </section>
             </div>
         `
+    }
+
+    // attributeChangedCallback(name, oldVal, newVal){
+    //     if(name === 'open'){
+    //         if(this.hasAttribute('open')){
+    //             this.shadowRoot.querySelector('')
+    //         }
+    //     }
+    // }
+
+    // static get observedAttributes(){
+    //     return['open'];
+    // }
+
+    open(){
+        this.setAttribute('open', '');
+    }
+
+    close(){
+        this.removeAttribute('open');
     }
 }
 
