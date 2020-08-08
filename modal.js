@@ -4,6 +4,7 @@ class Modal extends HTMLElement{
         this.attachShadow({mode: 'open'});
         this._ConfirmButton;
         this._CancelButton;
+        this._BackDrop;
         this.shadowRoot.innerHTML = `
             <style>
                 #backdrop {
@@ -21,7 +22,7 @@ class Modal extends HTMLElement{
 
                 #modal {
                     position: fixed;
-                    top 15vh;
+                    top 10vh;
                     left: 25%;
                     width: 50%;
                     z-index: 100;
@@ -33,11 +34,16 @@ class Modal extends HTMLElement{
                     justify-content: space-between;
                     opacity: 0;
                     pointer-events: none;
+                    transition: all 0.3s ease-out;
                 }
 
                 :host([open]) #backdrop, :host([open]) #modal{
                     opacity: 1;
                     pointer-events: all;
+                }
+
+                :host([open]) #modal{
+                    top: 15vh;
                 }
 
                 #actions{
@@ -54,10 +60,12 @@ class Modal extends HTMLElement{
 
                 header {
                     padding: 1rem;
+                    border-bottom: 1px solid #ccc;
                 }
 
-                header h1 {
+               ::slotted (h1) {
                     font-size: 1.25rem;
+                    margin: 0;
                 }
 
                 #main {
@@ -81,26 +89,20 @@ class Modal extends HTMLElement{
         `
     }
 
-    // attributeChangedCallback(name, oldVal, newVal){
-    //     if(name === 'open'){
-    //         if(this.hasAttribute('open')){
-    //             this.shadowRoot.querySelector('')
-    //         }
-    //     }
-    // }
-
-    // static get observedAttributes(){
-    //     return['open'];
-    // }
     connectedCallback(){
         this._CancelButton = this.shadowRoot.querySelector("#cancel-btn");
         this._ConfirmButton = this.shadowRoot.querySelector("#confirm-btn");
+        this._BackDrop = this.shadowRoot.querySelector("#backdrop");
 
         this._CancelButton.addEventListener('click', this._cancel.bind(this));
         this._ConfirmButton.addEventListener('click', this._confirm.bind(this));
+        this._BackDrop.addEventListener('click', this._cancel.bind(this));
     }
 
     disconnectedCallback(){
+        this._CancelButton.removeEventListener('click');
+        this._ConfirmButton.removeEventListener('click');
+        this._BackDrop.removeEventListener('click');
     }
 
     open(){
